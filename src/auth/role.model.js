@@ -74,18 +74,6 @@ export const UserRole = sequelize.define(
         key: 'id',
       },
     },
-    CreatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-      field: 'created_at',
-    },
-    UpdatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-      field: 'updated_at',
-    },
   },
   {
     tableName: 'user_roles',

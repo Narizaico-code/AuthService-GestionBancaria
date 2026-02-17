@@ -1,8 +1,14 @@
 import dotenv from 'dotenv';
 import { initServer } from './configs/app.js';
+import { sequelize } from './configs/db.js';
+import './src/users/user.model.js';
+import './src/auth/role.model.js';
 
 // Configurar variables de entorno
 dotenv.config();
+
+await sequelize.authenticate();
+await sequelize.sync({ alter: true });
 
 // Manejar errores no capturados
 process.on('uncaughtException', (err) => {
