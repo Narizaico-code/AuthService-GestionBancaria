@@ -218,6 +218,7 @@ export const verifyEmailHelper = async (token) => {
 
     // Find user by verification token (like .NET does)
     const user = await findUserByEmailVerificationToken(token);
+    console.log(user);
     if (!user) {
       throw new Error('Usuario no encontrado o token inválido');
     }

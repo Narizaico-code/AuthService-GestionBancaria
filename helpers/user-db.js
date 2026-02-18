@@ -195,7 +195,7 @@ export const markEmailAsVerified = async (userId) => {
     // Activar el usuario
     await User.update(
       {
-        Status: true,
+        IsActive: true,
       },
       {
         where: { Id: userId },
