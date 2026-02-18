@@ -3,9 +3,12 @@ import { initServer } from './configs/app.js';
 import { sequelize } from './configs/db.js';
 import './src/users/user.model.js';
 import './src/auth/role.model.js';
+import { seedData } from './helpers/data-seeder.js';
 
 // Configurar variables de entorno
 dotenv.config();
+
+await seedData();
 
 await sequelize.authenticate();
 await sequelize.sync({ alter: true });
