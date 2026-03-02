@@ -22,6 +22,7 @@ import { generateJWT } from './generate-jwt.js';
 import path from 'path';
 import { uploadImage } from './cloudinary-service.js';
 import { config } from '../configs/config.js';
+import fs from 'fs';
 
 const getExpirationTime = (timeString) => {
   const timeValue = parseInt(timeString);
@@ -43,8 +44,7 @@ const getExpirationTime = (timeString) => {
 
 export const registerUserHelper = async (userData) => {
   try {
-    const { email, password, name, phone, profilePicture } =
-      userData;
+    const { email, password, name, phone, profilePicture } = userData;
 
     // Validation is now handled by express-validator middleware in routes
     const userExists = await checkUserExists(email);
@@ -57,15 +57,15 @@ export const registerUserHelper = async (userData) => {
     if (profilePicture) {
       const uploadPath = config.upload.uploadPath;
 
-      // Detectar si es un archivo local
       const isLocalFile =
         profilePicture.includes('uploads/') ||
+        profilePicture.includes('uploads\\') ||
         profilePicture.includes(uploadPath) ||
-        profilePicture.startsWith('./');
+        profilePicture.startsWith('./') ||
+        fs.existsSync(profilePicture);
 
       if (isLocalFile) {
         try {
-          // Generar nombre como .NET: profile-<12chars>.jpg
           const ext = path.extname(profilePicture);
           const randomHex = crypto.randomBytes(6).toString('hex');
           const cloudinaryFileName = `profile-${randomHex}${ext}`;
@@ -82,7 +82,6 @@ export const registerUserHelper = async (userData) => {
           profilePictureToStore = null;
         }
       } else {
-        // Si viene una URL/ruta de Cloudinary, normalizar y almacenar solo el filename
         try {
           const baseUrl = config.cloudinary.baseUrl || '';
           const folder = config.cloudinary.folder || '';
@@ -93,11 +92,9 @@ export const registerUserHelper = async (userData) => {
           if (folder && normalized.startsWith(`${folder}/`)) {
             normalized = normalized.slice(folder.length + 1);
           }
-          // Si aún hay slashes, tomar el último segmento
           profilePictureToStore = normalized.split('/').pop();
         } catch (normErr) {
           console.warn('Could not normalize profile picture path:', normErr);
-          // fallback: mantener nulo para usar el default
           profilePictureToStore = null;
         }
       }

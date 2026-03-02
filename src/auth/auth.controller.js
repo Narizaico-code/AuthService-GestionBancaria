@@ -11,10 +11,14 @@ import { asyncHandler } from '../../middlewares/server-genericError-handler.js';
 
 export const register = asyncHandler(async (req, res) => {
   try {
-    // Agregar la imagen de perfil si fue subida
+    const uploadedFile =
+      req.file ||
+      req.files?.profilePicture?.[0] ||
+      req.files?.imagen?.[0];
+
     const userData = {
       ...req.body,
-      profilePicture: req.file ? req.file.path : null,
+      profilePicture: uploadedFile ? uploadedFile.path : null,
     };
 
     const result = await registerUserHelper(userData);

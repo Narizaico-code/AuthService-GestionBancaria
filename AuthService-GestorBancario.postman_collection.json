@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "3a13576b-6c24-4a6c-8623-557d76dcd135",
+		"name": "AuthService-GestorBancario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "52283264",
+		"_collection_link": "https://isuarez-2021691-7572583.postman.co/workspace/Iosef's-Workspace~bb715df8-0696-4af8-898c-0e785264ed73/collection/52283264-3a13576b-6c24-4a6c-8623-557d76dcd135?action=share&source=collection_link&creator=52283264"
+	},
+	"item": [
+		{
+			"name": "Registrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "ios",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "iossg8@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Mlgdi3301",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "53170347",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificar-Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"gDlH8eE5SmSGXq7njU8PqeIZOdfmadmcJ0AgRva2tsQ\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/verify-email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"verify-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\r\nemailAdmin: admin@gestor.local\r\ncontraAdmin: Admin1234!\r\n*/\r\n\r\n{\r\n    \"email\" : \"iossg8@gmail.com\",\r\n    \"password\": \"Hola12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cambiar el role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfbkViZVJZWUhUUkphIiwianRpIjoiOWM5ZTU1OWQtNjhiOS00MTk0LWFlMzUtOWRlNjQyZWFiOTBiIiwiaWF0IjoxNzcyNDIwNzc1LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjQyMjU3NSwiYXVkIjoiclZtR2tBaVNsTWFSIiwiaXNzIjoiclZtR2tBaVNsTWFSIn0.AySloKaUKcdrA60lnmrfBK22pJDVFLKk3k_7eo0hl04",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//Solo se puede cambiar role del usuario por medio de la autorización del token del admins\r\n\r\n{\r\n\r\n    \"roleName\" : \"ADMIN_ROLE\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/users/usr_mqqjiRQ4KYPW/role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"usr_mqqjiRQ4KYPW",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificar otra vez el correo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"iossg8@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/resend-verification",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"resend-verification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperacion de contraseña",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"iossg8@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/forgot-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cambio de contraseña",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"token\": \"nsYpx5ncJDdTAsQ9bxlkN4iG2xoWBStqV3S-gRGcz5w\",\r\n  \"newPassword\": \"Hola12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/reset-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver perfil",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfbXFxamlSUTRLWVBXIiwianRpIjoiODk5YWZjMWYtNTU4ZC00NTE5LWJhZjEtNzA5NWQ0ZmUyMjQ2IiwiaWF0IjoxNzcyNDE0OTY2LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyNDE2NzY2LCJhdWQiOiJyVm1Ha0FpU2xNYVIiLCJpc3MiOiJyVm1Ha0FpU2xNYVIifQ.nYATddJMwS2NCwVSyWAXHpY29-3RwZZ6IiYOpWzIfIA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//Se requiere el token del usuario para ver los datos del perfil"
+				},
+				"url": {
+					"raw": "http://localhost:3005/api/v1/auth/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

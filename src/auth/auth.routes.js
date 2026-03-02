@@ -67,7 +67,10 @@ const router = Router();
 router.post(
   '/register',
   authRateLimit,
-  upload.single('profilePicture'),
+  upload.fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'imagen', maxCount: 1 },
+  ]),
   handleUploadError,
   validateRegister,
   authController.register

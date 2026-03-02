@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -27,15 +28,16 @@ export const config = {
   upload: {
     maxSize: 5 * 1024 * 1024, // 5MB (aligned with .NET)
     allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'], // aligned with .NET
-    uploadPath: process.env.UPLOAD_PATH,
+    // Ensure we always have a folder to store multipart/form-data uploads
+    uploadPath: process.env.UPLOAD_PATH || path.join(process.cwd(), 'uploads'),
   },
 
   // Cloudinary Configuration
   cloudinary: {
-    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-    apiKey: process.env.CLOUDINARY_API_KEY,
-    apiSecret: process.env.CLOUDINARY_API_SECRET,
-    baseUrl: process.env.CLOUDINARY_BASE_URL,
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME?.trim(),
+    apiKey: process.env.CLOUDINARY_API_KEY?.trim(),
+    apiSecret: process.env.CLOUDINARY_API_SECRET?.trim(),
+    baseUrl: process.env.CLOUDINARY_BASE_URL?.trim(),
     // Expand nested env references if not supported by dotenv
     // If CLOUDINARY_DEFAULT_AVATAR contains ${...}, build it from folder + filename
     defaultAvatarPath:
@@ -48,7 +50,7 @@ export const config = {
           ]
             .filter(Boolean)
             .join('/'),
-    folder: process.env.CLOUDINARY_FOLDER,
+    folder: process.env.CLOUDINARY_FOLDER?.trim(),
   },
 
   // Rate Limiting (aligned with .NET AuthPolicy and ApiPolicy)
