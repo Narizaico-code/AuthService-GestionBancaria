@@ -87,6 +87,7 @@ export const config = {
   // App Settings (aligned with .NET AppSettings)
   app: {
     frontendUrl: process.env.FRONTEND_URL,
+    backendUrl: process.env.BACKEND_URL || process.env.API_URL,
   },
 
   // Security Settings (aligned with .NET Security config)

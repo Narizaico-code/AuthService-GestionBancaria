@@ -48,6 +48,11 @@ export const User = sequelize.define(
       allowNull: false,
       field: 'is_active',
     },
+    LastSensitiveChangeAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'last_sensitive_change_at',
+    },
   },
   {
     tableName: 'users',

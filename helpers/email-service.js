@@ -37,7 +37,10 @@ export const sendVerificationEmail = async (email, name, verificationToken) => {
 
   try {
     const frontendUrl = config.app.frontendUrl || 'http://localhost:3000';
-    const verificationUrl = `${frontendUrl}/verify-email?token=${verificationToken}`;
+    const backendUrl = config.app.backendUrl;
+    const verificationUrl = backendUrl
+      ? `${backendUrl}/api/v1/auth/verify-email?token=${verificationToken}`
+      : `${frontendUrl}/verify-email?token=${verificationToken}`;
 
     const mailOptions = {
       from: `${config.smtp.fromName} <${config.smtp.fromEmail}>`,
@@ -51,7 +54,7 @@ export const sendVerificationEmail = async (email, name, verificationToken) => {
         </a>
         <p>Si no puedes hacer clic en el enlace, copia y pega esta URL en tu navegador:</p>
         <p>${verificationUrl}</p>
-        <p>Este enlace expirará en 24 horas.</p>
+        <p>Este enlace expirara en 24 horas.</p>
         <p>Si no creaste una cuenta, por favor ignora este correo.</p>
       `,
     };

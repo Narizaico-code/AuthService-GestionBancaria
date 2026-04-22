@@ -123,3 +123,33 @@ export const validateResetPassword = [
 
   handleValidationErrors,
 ];
+
+/**
+ * Validaciones para actualizar perfil
+ */
+export const validateUpdateUser = [
+  body('email')
+    .optional()
+    .trim()
+    .isEmail()
+    .withMessage('El correo electrónico no tiene un formato válido')
+    .isLength({ max: 150 })
+    .withMessage('El correo electrónico no puede tener más de 150 caracteres'),
+
+  body('phone')
+    .optional()
+    .matches(/^\d{8}$/)
+    .withMessage('El número de teléfono debe tener exactamente 8 dígitos'),
+
+  body('newPassword')
+    .optional()
+    .isLength({ min: 8, max: 255 })
+    .withMessage('La contraseña debe tener entre 8 y 255 caracteres'),
+
+  body('currentPassword')
+    .if(body('newPassword').exists())
+    .notEmpty()
+    .withMessage('La contraseña actual es obligatoria'),
+
+  handleValidationErrors,
+];

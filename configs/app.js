@@ -7,7 +7,9 @@ import morgan from 'morgan';
 import { dbConnection } from './db.js';
 // Ensure models are registered before DB sync
 import '../src/users/user.model.js';
+import '../src/users/user-update-request.model.js';
 import '../src/auth/role.model.js';
+import '../src/auth/signup-request.model.js';
 import { requestLimit } from '../middlewares/request-limit.js';
 import { corsOptions } from './cors-configuration.js';
 import { helmetConfiguration } from './helmet-configuration.js';

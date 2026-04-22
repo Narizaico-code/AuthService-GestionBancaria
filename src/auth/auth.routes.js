@@ -6,6 +6,7 @@ import {
   requestLimit,
 } from '../../middlewares/request-limit.js';
 import { upload, handleUploadError } from '../../helpers/file-upload.js';
+import { requireAdmin } from '../../middlewares/require-admin.js';
 import {
   validateRegister,
   validateLogin,
@@ -14,6 +15,12 @@ import {
   validateForgotPassword,
   validateResetPassword,
 } from '../../middlewares/validation.js';
+import {
+  submitSignupRequest,
+  listPendingRequests,
+  approveRequest,
+  rejectRequest,
+} from './signup-request.controller.js';
 
 const router = Router();
 
@@ -74,6 +81,35 @@ router.post(
   handleUploadError,
   validateRegister,
   authController.register
+);
+
+// Flujo de solicitud: el cliente crea solicitud y un admin la aprueba y envía token
+router.post(
+  '/signup-request',
+  authRateLimit,
+  validateRegister,
+  submitSignupRequest
+);
+
+router.get(
+  '/signup-requests',
+  validateJWT,
+  requireAdmin,
+  listPendingRequests
+);
+
+router.post(
+  '/signup-requests/:id/approve',
+  validateJWT,
+  requireAdmin,
+  approveRequest
+);
+
+router.post(
+  '/signup-requests/:id/reject',
+  validateJWT,
+  requireAdmin,
+  rejectRequest
 );
 
 /**
@@ -139,6 +175,12 @@ router.post(
   requestLimit, // Match .NET ApiPolicy (20 tokens per minute)
   validateVerifyEmail,
   authController.verifyEmail
+);
+
+router.get(
+  '/verify-email',
+  requestLimit, // Match .NET ApiPolicy (20 tokens per minute)
+  authController.verifyEmailLink
 );
 
 /**

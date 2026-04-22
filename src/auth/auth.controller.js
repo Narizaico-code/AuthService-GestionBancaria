@@ -96,6 +96,39 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   }
 });
 
+export const verifyEmailLink = asyncHandler(async (req, res) => {
+  try {
+    const token = req.query?.token;
+    if (!token) {
+      return res.status(400).json({
+        success: false,
+        message: 'No se encontro el token de verificacion.',
+      });
+    }
+
+    const result = await verifyEmailHelper(token);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error('Error in verifyEmailLink controller:', error);
+
+    let statusCode = 400;
+    if (error.message.includes('no encontrado')) {
+      statusCode = 404;
+    } else if (
+      error.message.includes('invalido') ||
+      error.message.includes('expirado')
+    ) {
+      statusCode = 401;
+    }
+
+    return res.status(statusCode).json({
+      success: false,
+      message: error.message || 'Error al verificar el correo.',
+      error: error.message,
+    });
+  }
+});
+
 export const resendVerification = asyncHandler(async (req, res) => {
   try {
     const { email } = req.body;
