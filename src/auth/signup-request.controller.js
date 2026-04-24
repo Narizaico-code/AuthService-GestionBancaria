@@ -7,7 +7,14 @@ import {
 } from '../../helpers/signup-request-db.js';
 
 export const submitSignupRequest = asyncHandler(async (req, res) => {
-  const { name, email, password, phone, profilePicture } = req.body || {};
+  const { name, email, password, phone } = req.body || {};
+
+  const uploadedFile =
+    req.file ||
+    req.files?.profilePicture?.[0] ||
+    req.files?.imagen?.[0];
+
+  const profilePicture = uploadedFile ? uploadedFile.path : null;
 
   const request = await createSignupRequest({
     name,

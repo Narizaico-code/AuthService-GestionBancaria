@@ -5,13 +5,14 @@ import { randomBytes } from 'crypto';
  * Validador de archivos similar al de .NET
  */
 export class FileValidator {
-  static ALLOWED_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
+  static ALLOWED_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.jfif'];
   static MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
   static ALLOWED_CONTENT_TYPES = [
     'image/jpeg',
     'image/jpg',
     'image/png',
     'image/webp',
+    'image/jfif',
   ];
 
   static validateImage(file) {

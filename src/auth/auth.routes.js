@@ -87,6 +87,11 @@ router.post(
 router.post(
   '/signup-request',
   authRateLimit,
+  upload.fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'imagen', maxCount: 1 },
+  ]),
+  handleUploadError,
   validateRegister,
   submitSignupRequest
 );

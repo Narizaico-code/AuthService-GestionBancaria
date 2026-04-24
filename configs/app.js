@@ -19,6 +19,8 @@ import {
 } from '../middlewares/server-genericError-handler.js';
 import authRoutes from '../src/auth/auth.routes.js';
 import userRoutes from '../src/users/user.routes.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger.js';
 
 const BASE_PATH = '/api/v1';
 
@@ -32,6 +34,7 @@ const middlewares = (app) => {
 };
 
 const routes = (app) => {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use(`${BASE_PATH}/auth`, authRoutes);
   app.use(`${BASE_PATH}/users`, userRoutes);
 
